@@ -256,16 +256,9 @@ st.markdown("""
     <a class="nav-item" href="/6_ML_Model">ML Model</a>
     <a class="nav-item" href="/7_About">About</a>
 </div>
+
 """, unsafe_allow_html=True)
-    <a class="nav-item" href="/1_Player_Profiles">👤 Player Profiles</a>
-    <a class="nav-item" href="/2_Player_Comparison">⚖️ Comparison</a>
-    <a class="nav-item" href="/3_Match_Prediction">🔮 Match Prediction</a>
-    <a class="nav-item" href="/4_Tournament_Prediction">🏆 Tournament</a>
-    <a class="nav-item" href="/5_Analytics_Dashboard">📊 Dashboard</a>
-    <a class="nav-item" href="/6_ML_Model">🤖 ML Model</a>
-    <a class="nav-item" href="/7_About">ℹ️ About</a>
-</div>
-""", unsafe_allow_html=True)
+   
 
 # TOP CONTENDERS
 st.markdown("""
