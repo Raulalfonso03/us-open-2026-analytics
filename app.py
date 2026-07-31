@@ -20,7 +20,7 @@ st.markdown("""
     background-image: radial-gradient(ellipse at 20% 50%, rgba(0,100,0,0.08) 0%, transparent 50%);
 }
 header[data-testid="stHeader"] { background: transparent; }
-[data-testid="stSidebar"] { display: none; }
+[data-testid="stSidebar"] { background: #0a0a0f; border-right: 1px solid rgba(0,255,136,0.2); }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 
 .hero {
