@@ -114,8 +114,7 @@ with col_info:
         </div>
         {f'<p style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px">⚠️ {nota}</p>' if nota and str(nota) != 'nan' else ''}
         <div style="margin-top:16px;font-size:3rem;font-weight:900;color:#00ff88;line-height:1">#{rank}</div>
-        <div style="color:rgba(255,255,255,0.3);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase">ATP Ranking · {points:,} pts</div>
-    </div>
+        <div style="color:rgba(255,255,255,0.3);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase">ATP Ranking</div>
     """, unsafe_allow_html=True)
 
 st.markdown("---")
