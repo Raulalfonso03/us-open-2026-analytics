@@ -33,7 +33,7 @@ header[data-testid="stHeader"] { background: transparent; }
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 60px;
+    padding: 80px 10% 80px 10%;
 align-items: center;
 text-align: center;
 }
@@ -93,14 +93,24 @@ text-align: center;
 .nav-item {
     padding: 8px 20px;
     border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.7);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7) !important;
     white-space: nowrap;
-    text-decoration: none;
+    text-decoration: none !important;
+    letter-spacing: 1px;
 }
 
-.nav-item.active { color: #00ff88; background: rgba(0,255,136,0.1); }
+.nav-item:hover {
+    color: #ffffff !important;
+    background: rgba(255,255,255,0.05);
+}
+
+.nav-item.active {
+    color: #00ff88 !important;
+    background: rgba(0,255,136,0.1);
+}
+
 
 .section { padding: 60px; max-width: 1400px; margin: 0 auto; }
 
