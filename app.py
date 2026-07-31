@@ -210,7 +210,7 @@ fotos = {
     "Ben Shelton":           "https://www.atptour.com/-/media/alias/player-headshot/S0S1",
     "Alex de Minaur":        "https://www.atptour.com/-/media/alias/player-headshot/DH58",
     "Taylor Fritz":          "https://www.atptour.com/-/media/alias/player-headshot/FB98",
-    "Novak Djokovic":        "https://www.atptour.com/-/media/alias/player-headshot/DJ17",
+    "Novak Djokovic":        "https://www.atptour.com/-/media/alias/player-headshot/D643",
     "Daniil Medvedev":       "https://www.atptour.com/-/media/alias/player-headshot/MM58",
     "Flavio Cobolli":        "https://www.atptour.com/-/media/alias/player-headshot/C0E9",
     "Alexander Bublik":      "https://www.atptour.com/-/media/alias/player-headshot/BK92",
@@ -268,7 +268,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 cols = st.columns(6)
-for i, row in df_pred.head(12).iterrows():
+for i, row in df_pred.head(6).iterrows():
     name   = row["Jugador"]
     prob   = row["Prob US Open"]
     rank   = int(row["Ranking ATP"]) if pd.notna(row.get("Ranking ATP")) else "?"
