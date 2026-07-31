@@ -34,6 +34,8 @@ header[data-testid="stHeader"] { background: transparent; }
     flex-direction: column;
     justify-content: flex-end;
     padding: 60px;
+align-items: center;
+text-align: center;
 }
 
 .hero-badge {
@@ -78,13 +80,14 @@ header[data-testid="stHeader"] { background: transparent; }
 .nav {
     display: flex;
     gap: 8px;
-    padding: 16px 60px;
+    padding: 16px;
     background: rgba(5,5,5,0.95);
     border-bottom: 1px solid rgba(255,255,255,0.05);
     position: sticky;
     top: 0;
     z-index: 100;
     overflow-x: auto;
+    justify-content: center;
 }
 
 .nav-item {
@@ -92,7 +95,7 @@ header[data-testid="stHeader"] { background: transparent; }
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.7);
     white-space: nowrap;
     text-decoration: none;
 }
