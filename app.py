@@ -247,7 +247,16 @@ st.markdown(f"""
 # NAV
 st.markdown("""
 <div class="nav">
-    <a class="nav-item active" href="/">🏠 Home</a>
+    <a class="nav-item active" href="/">Home</a>
+    <a class="nav-item" href="/1_Player_Profiles">Player Profiles</a>
+    <a class="nav-item" href="/2_Player_Comparison">Comparison</a>
+    <a class="nav-item" href="/3_Match_Prediction">Match Prediction</a>
+    <a class="nav-item" href="/4_Tournament_Prediction">Tournament</a>
+    <a class="nav-item" href="/5_Analytics_Dashboard">Dashboard</a>
+    <a class="nav-item" href="/6_ML_Model">ML Model</a>
+    <a class="nav-item" href="/7_About">About</a>
+</div>
+""", unsafe_allow_html=True)
     <a class="nav-item" href="/1_Player_Profiles">👤 Player Profiles</a>
     <a class="nav-item" href="/2_Player_Comparison">⚖️ Comparison</a>
     <a class="nav-item" href="/3_Match_Prediction">🔮 Match Prediction</a>
@@ -265,41 +274,38 @@ st.markdown("""
     <div class="section-title">Top Contenders</div>
 """, unsafe_allow_html=True)
 
-cards_html = '<div class="players-grid">'
+cols = st.columns(6)
 for i, row in df_pred.head(12).iterrows():
     name   = row["Jugador"]
     prob   = row["Prob US Open"]
     rank   = int(row["Ranking ATP"]) if pd.notna(row.get("Ranking ATP")) else "?"
     estado = row.get("Estado", "FIT")
     foto   = fotos.get(name, "")
-    bar_w  = min(prob * 15, 100)
-
-    if estado == "LESIONADO":
-        tag = '<div class="injury-tag">INJURED</div>'
-    elif estado == "DUDA":
-        tag = '<div class="doubt-tag">DOUBT</div>'
-    else:
-        tag = ""
-
-    img_html = f'<img class="player-card-img" src="{foto}">' if foto else '<div class="player-card-img" style="display:flex;align-items:center;justify-content:center;font-size:3rem">🎾</div>'
-
-    cards_html += f"""
-    <div class="player-card">
-        {tag}
-        {img_html}
-        <div class="player-card-body">
-            <div class="player-card-rank">ATP #{rank}</div>
-            <div class="player-card-name">{name}</div>
-            <div class="player-card-prob">{prob}%</div>
-            <div class="player-card-prob-label">win probability</div>
-            <div class="player-card-bar">
-                <div class="player-card-bar-fill" style="width:{bar_w}%"></div>
-            </div>
+    
+    with cols[i % 6]:
+        if estado == "LESIONADO":
+            badge = "🔴 INJURED"
+            color = "#ff4444"
+        elif estado == "DUDA":
+            badge = "🟡 DOUBT"
+            color = "#ffaa00"
+        else:
+            badge = "🟢 FIT"
+            color = "#00ff88"
+        
+        if foto:
+            st.image(foto, use_container_width=True)
+        
+        st.markdown(f"""
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+                    border-radius:12px;padding:12px;margin-top:8px;text-align:center">
+            <div style="color:#00ff88;font-size:0.65rem;font-weight:700;letter-spacing:2px">ATP #{rank}</div>
+            <div style="color:#fff;font-weight:700;font-size:0.9rem;margin:4px 0">{name}</div>
+            <div style="color:{color};font-size:1.4rem;font-weight:900">{prob}%</div>
+            <div style="color:rgba(255,255,255,0.3);font-size:0.6rem">win probability</div>
+            <div style="color:{color};font-size:0.7rem;margin-top:6px">{badge}</div>
         </div>
-    </div>"""
-
-cards_html += "</div></div>"
-st.markdown(cards_html, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
