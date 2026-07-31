@@ -20,7 +20,27 @@ st.markdown("""
     background-image: radial-gradient(ellipse at 20% 50%, rgba(0,100,0,0.08) 0%, transparent 50%);
 }
 header[data-testid="stHeader"] { background: transparent; }
-[data-testid="stSidebar"] { background: #0a0a0f; border-right: 1px solid rgba(0,255,136,0.2); }
+[data-testid="stSidebar"] {
+    background: rgba(5,5,5,0.98) !important;
+    border-right: 1px solid rgba(0,255,136,0.15) !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+[data-testid="stSidebar"] * {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 0.85rem !important;
+}
+
+[data-testid="stSidebarNav"] a {
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+}
+
+[data-testid="stSidebarNav"] a:hover {
+    background: rgba(0,255,136,0.1) !important;
+    color: #00ff88 !important;
+}
 .block-container { padding: 0 !important; max-width: 100% !important; }
 
 .hero {
