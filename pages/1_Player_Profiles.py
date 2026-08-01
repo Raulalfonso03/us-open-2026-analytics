@@ -101,21 +101,14 @@ with col_photo:
         st.markdown('<div style="width:220px;height:220px;background:rgba(255,255,255,0.04);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:5rem">🎾</div>', unsafe_allow_html=True)
 
 with col_info:
-    st.markdown(f"""
-    <div style="padding:16px 0">
-        <h1 style="color:#ffffff;margin:0 0 4px 0;font-size:2.8rem;font-weight:900;font-family:'Bebas Neue',sans-serif;letter-spacing:2px">{selected}</h1>
-        <p style="color:rgba(255,255,255,0.35);margin:0 0 16px 0;letter-spacing:3px;text-transform:uppercase;font-size:0.75rem">ATP Professional · Hard Court Specialist</p>
-        <span style="background:{estado_color}20;color:{estado_color};border:1px solid {estado_color};border-radius:6px;padding:4px 14px;font-size:0.8rem;font-weight:700;letter-spacing:1px">{estado_icon}</span>
-        {nota_html}
-        <div style="margin-top:20px;display:flex;align-items:baseline;gap:12px">
-            <div style="font-size:3.5rem;font-weight:900;color:#00ff88;line-height:1;font-family:'Bebas Neue',sans-serif">{rank_str}</div>
-            <div>
-                <div style="color:rgba(255,255,255,0.25);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase">ATP Ranking</div>
-                <div style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:2px">{points_str}</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f'<h1 style="color:#ffffff;margin:0 0 4px 0;font-size:2.8rem;font-weight:900;letter-spacing:2px">{selected}</h1>', unsafe_allow_html=True)
+    st.markdown('<p style="color:rgba(255,255,255,0.35);margin:0 0 16px 0;letter-spacing:3px;text-transform:uppercase;font-size:0.75rem">ATP Professional · Hard Court Specialist</p>', unsafe_allow_html=True)
+    st.markdown(f'<span style="background:{estado_color}20;color:{estado_color};border:1px solid {estado_color};border-radius:6px;padding:4px 14px;font-size:0.8rem;font-weight:700">{estado_icon}</span>', unsafe_allow_html=True)
+    if nota and str(nota) != 'nan':
+        st.markdown(f'<p style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px">{nota}</p>', unsafe_allow_html=True)
+    st.markdown(f'<div style="margin-top:20px;font-size:3.5rem;font-weight:900;color:#00ff88;line-height:1">{rank_str}</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:rgba(255,255,255,0.25);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase">ATP Ranking</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:2px">{points_str}</div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
