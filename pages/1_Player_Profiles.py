@@ -57,9 +57,14 @@ fotos = {
     "Tommy Paul":            "https://www.atptour.com/-/media/alias/player-headshot/PL56",
 }
 
-st.markdown("# 👤 Player Profiles")
-st.markdown("Detailed statistics for each ATP player")
-st.markdown("---")
+st.markdown("""
+<div style="text-align:center;padding:40px 0 20px 0">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:4px;color:#00ff88;text-transform:uppercase;margin-bottom:8px">US Open 2026</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:4rem;color:#ffffff;letter-spacing:3px;line-height:1">PLAYER PROFILES</div>
+    <div style="color:rgba(255,255,255,0.3);font-size:0.9rem;margin-top:8px;letter-spacing:2px">Detailed statistics for each ATP player</div>
+</div>
+<hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:0 0 24px 0">
+""", unsafe_allow_html=True)
 
 jugadores = sorted(df["player_name"].dropna().unique().tolist())
 selected = st.selectbox("🔍 Select a player", jugadores,
@@ -92,7 +97,19 @@ with col_photo:
 
 with col_info:
     nota_html = f'<p style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px">⚠️ {nota}</p>' if nota and str(nota) != 'nan' else ''
+    rank_str = f"#{rank}" if rank != "N/A" else "N/A"
     st.markdown(f"""
+    <div style="padding:20px 0">
+        <h1 style="color:#ffffff;margin:0;font-size:2.5rem;font-weight:900;font-family:'Bebas Neue',sans-serif;letter-spacing:2px">{selected}</h1>
+        <p style="color:rgba(255,255,255,0.4);margin:4px 0;letter-spacing:3px;text-transform:uppercase;font-size:0.8rem">ATP Professional · Hard Court Specialist</p>
+        <div style="margin-top:12px">
+            <span style="background:{estado_color}22;color:{estado_color};border:1px solid {estado_color};border-radius:8px;padding:4px 14px;font-size:0.85rem;font-weight:700">{estado_icon}</span>
+        </div>
+        {nota_html}
+        <div style="margin-top:16px;font-size:3rem;font-weight:900;color:#00ff88;line-height:1">{rank_str}</div>
+        <div style="color:rgba(255,255,255,0.3);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase">ATP Ranking</div>
+    </div>
+    """, unsafe_allow_html=True)
     <div style="padding:20px 0">
         <h1 style="color:#ffffff;margin:0;font-size:2.5rem;font-weight:900;font-family:'Bebas Neue',sans-serif;letter-spacing:2px">{selected}</h1>
         <p style="color:rgba(255,255,255,0.4);margin:4px 0;letter-spacing:3px;text-transform:uppercase;font-size:0.8rem">ATP Professional · Hard Court Specialist</p>
