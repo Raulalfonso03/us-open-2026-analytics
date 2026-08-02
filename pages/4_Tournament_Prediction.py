@@ -197,3 +197,5 @@ st.markdown("""
 <p style="text-align:center;color:rgba(255,255,255,0.15);font-size:0.75rem">
 US Open 2026 Analytics Platform · Capstone Project · Estimated probabilities, not real results
 </p>""", unsafe_allow_html=True)
+
+
