@@ -8,165 +8,171 @@ st.set_page_config(page_title="ML Model", page_icon="🤖", layout="wide")
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-    * { font-family: 'Inter', sans-serif; }
-    .stApp { background-color: #0a0a0f; }
-    [data-testid="stSidebar"] { background: linear-gradient(180deg, #0d1117 0%, #0a0a0f 100%); border-right: 1px solid #1a472a; }
-    .section-header { font-size: 1.2rem; font-weight: 700; color: #00ff88; border-bottom: 2px solid #1a472a; padding-bottom: 8px; margin: 20px 0 12px 0; }
-    [data-testid="metric-container"] { background: #0d1117; border: 1px solid #1a472a; border-radius: 12px; padding: 12px; }
-    .model-card {
-        background: #0d1117; border: 1px solid #1a472a;
-        border-radius: 12px; padding: 20px; text-align: center; margin: 8px 0;
-    }
-    .best-model {
-        background: linear-gradient(135deg, #0d2818, #0d1117);
-        border: 2px solid #00ff88; border-radius: 12px;
-        padding: 20px; text-align: center; margin: 8px 0;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&display=swap');
+* { font-family: 'Inter', sans-serif; }
+.stApp { background-color: #050505; }
+[data-testid="stSidebar"] { background: rgba(5,5,5,0.98) !important; border-right: 1px solid rgba(0,255,136,0.15) !important; }
+[data-testid="stSidebar"] * { color: rgba(255,255,255,0.6) !important; }
+.section-header { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #ffffff; border-bottom: 1px solid rgba(0,255,136,0.3); padding-bottom: 8px; margin: 24px 0 16px 0; letter-spacing: 2px; }
+.section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; color: #00ff88; text-transform: uppercase; margin-bottom: 4px; }
+[data-testid="metric-container"] { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; }
+[data-testid="stMetricValue"] { color: #00ff88 !important; font-weight: 900 !important; }
+[data-testid="stMetricLabel"] { color: rgba(255,255,255,0.4) !important; font-size: 0.75rem !important; }
 </style>
 """, unsafe_allow_html=True)
 
-with st.sidebar:
-    st.markdown("## 🎾 US Open 2026")
-    st.markdown("---")
-    st.markdown("""
-    - 🏠 Home
-    - 👤 Player Profiles
-    - ⚖️ Player Comparison
-    - 🔮 Match Prediction
-    - 🏆 Tournament Prediction
-    - 📊 Analytics Dashboard
-    - 🤖 **ML Model**
-    - ℹ️ About
-    """)
+# Title
+st.markdown("""
+<div style="text-align:center;padding:40px 0 20px 0">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:4px;color:#00ff88;text-transform:uppercase;margin-bottom:8px">US Open 2026</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:4rem;color:#ffffff;letter-spacing:3px;line-height:1">MACHINE LEARNING MODEL</div>
+    <div style="color:rgba(255,255,255,0.3);font-size:0.9rem;margin-top:8px;letter-spacing:2px">Methodology, results and analysis of the prediction model</div>
+</div>
+<hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:0 0 24px 0">
+""", unsafe_allow_html=True)
 
-st.markdown("# 🤖 Machine Learning Model")
-st.markdown("Metodología, resultados y análisis del modelo de predicción")
-st.markdown("---")
+# Model results
+st.markdown('<div class="section-label">Performance</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">MODEL COMPARISON</div>', unsafe_allow_html=True)
 
-# Resultados de los modelos
-st.markdown('<p class="section-header">📊 COMPARACIÓN DE MODELOS</p>', unsafe_allow_html=True)
+modelos = [
+    {"name": "Random Forest",       "accuracy": 58.3, "roc_auc": 0.632, "best": False},
+    {"name": "Logistic Regression", "accuracy": 65.2, "roc_auc": 0.716, "best": True},
+    {"name": "Decision Tree",       "accuracy": 64.1, "roc_auc": 0.698, "best": False},
+]
 
-modelos_data = {
-    "Modelo":    ["Random Forest", "Logistic Regression", "Decision Tree"],
-    "Accuracy":  [0.583, 0.652, 0.641],
-    "ROC AUC":   [0.632, 0.716, 0.698],
-    "Precision": [0.58, 0.65, 0.64],
-    "Recall":    [0.58, 0.65, 0.64],
-}
-df_modelos = pd.DataFrame(modelos_data)
-
-col1, col2, col3 = st.columns(3)
-for i, (col, row) in enumerate(zip([col1,col2,col3], df_modelos.itertuples())):
+cols = st.columns(3)
+for i, (col, m) in enumerate(zip(cols, modelos)):
     with col:
-        is_best = row.Modelo == "Logistic Regression"
-        card_class = "best-model" if is_best else "model-card"
-        badge = "🥇 MEJOR MODELO" if is_best else ""
+        border = "#00ff88" if m["best"] else "rgba(255,255,255,0.08)"
+        bg = "rgba(0,255,136,0.05)" if m["best"] else "rgba(255,255,255,0.02)"
+        badge = '<div style="color:#00ff88;font-size:0.65rem;font-weight:700;letter-spacing:2px;margin-bottom:8px">🥇 BEST MODEL</div>' if m["best"] else '<div style="height:20px;margin-bottom:8px"></div>'
+        acc_str = str(m["accuracy"])
+        roc_str = str(round(m["roc_auc"], 3))
         st.markdown(f"""
-        <div class="{card_class}">
-            <div style="color:#00ff88;font-size:0.75rem;margin-bottom:4px">{badge}</div>
-            <div style="color:#fff;font-size:1.1rem;font-weight:700">{row.Modelo}</div>
-            <div style="color:#00ff88;font-size:2rem;font-weight:900;margin:8px 0">{row.Accuracy*100:.1f}%</div>
-            <div style="color:#555;font-size:0.85rem">Accuracy</div>
-            <div style="color:#888;font-size:0.9rem;margin-top:8px">ROC AUC: {row._4:.3f}</div>
+        <div style="background:{bg};border:2px solid {border};border-radius:16px;padding:24px;text-align:center">
+            {badge}
+            <div style="font-size:1rem;font-weight:700;color:#ffffff;margin-bottom:16px">{m["name"]}</div>
+            <div style="font-size:3rem;font-weight:900;color:#00ff88;line-height:1">{acc_str}%</div>
+            <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;margin-top:4px">Accuracy</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:0.9rem;margin-top:12px">ROC AUC: {roc_str}</div>
         </div>""", unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Grafico comparativo
+# Comparison chart
+st.markdown('<div class="section-label">Visual Comparison</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">ACCURACY vs ROC AUC</div>', unsafe_allow_html=True)
+
+names = [m["name"] for m in modelos]
+accs  = [m["accuracy"] for m in modelos]
+rocs  = [m["roc_auc"]*100 for m in modelos]
+
 fig_comp = go.Figure()
-fig_comp.add_trace(go.Bar(name="Accuracy", x=df_modelos["Modelo"], y=df_modelos["Accuracy"]*100,
+fig_comp.add_trace(go.Bar(name="Accuracy (%)", x=names, y=accs,
                            marker_color=["#2e8b57","#00ff88","#1a472a"],
-                           text=[f"{v*100:.1f}%" for v in df_modelos["Accuracy"]],
+                           text=[f"{v}%" for v in accs],
                            textposition="outside", textfont=dict(color="white")))
-fig_comp.add_trace(go.Bar(name="ROC AUC", x=df_modelos["Modelo"], y=df_modelos["ROC AUC"]*100,
+fig_comp.add_trace(go.Bar(name="ROC AUC (%)", x=names, y=rocs,
                            marker_color=["#1a3a6a","#0066cc","#0044aa"],
-                           text=[f"{v*100:.1f}%" for v in df_modelos["ROC AUC"]],
+                           text=[f"{v:.1f}%" for v in rocs],
                            textposition="outside", textfont=dict(color="white")))
 fig_comp.update_layout(barmode="group", template="plotly_dark",
                         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                         height=350, margin=dict(l=10,r=10,t=10,b=10),
                         legend=dict(font=dict(color="white")),
-                        yaxis=dict(range=[0,90]))
+                        yaxis=dict(range=[0,85]))
 st.plotly_chart(fig_comp, use_container_width=True)
 
 st.markdown("---")
 
-# Feature Importance
-st.markdown('<p class="section-header">🎯 FEATURE IMPORTANCE — LOGISTIC REGRESSION</p>', unsafe_allow_html=True)
+# Feature importance
+st.markdown('<div class="section-label">Logistic Regression</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">FEATURE IMPORTANCE</div>', unsafe_allow_html=True)
 
 features_data = {
-    "Feature": ["Win% Hard Court","Aces 2026","Win% Grand Slams","Ranking ATP",
-                 "1er Saque Ganado %","Win% Masters 1000","BP Convertidos %",
-                 "Tras perder 1er set","Set Decisivo","2do Saque Ganado %",
-                 "Tras ganar 1er set","BP Salvados %","Win% Overall","Tiebreak"],
-    "Importancia": [0.756,0.326,0.147,0.124,0.110,0.088,0.082,
-                    0.074,0.073,0.059,0.031,0.026,0.016,0.007]
+    "Feature": ["Hard Court Win%","Aces 2026","Grand Slam Win%","ATP Ranking",
+                 "1st Serve Won%","Masters 1000 Win%","BP Converted%",
+                 "After losing 1st set","Deciding Set","2nd Serve Won%",
+                 "After winning 1st set","BP Saved%","Overall Win%","Tiebreak"],
+    "Importance": [0.756,0.326,0.147,0.124,0.110,0.088,0.082,
+                   0.074,0.073,0.059,0.031,0.026,0.016,0.007]
 }
-df_fi = pd.DataFrame(features_data).sort_values("Importancia", ascending=True)
+df_fi = pd.DataFrame(features_data).sort_values("Importance", ascending=True)
 
-fig_fi = px.bar(df_fi, x="Importancia", y="Feature", orientation="h",
-                color="Importancia", color_continuous_scale="Greens",
-                template="plotly_dark", labels={"Importancia":"Importancia","Feature":""})
+fig_fi = px.bar(df_fi, x="Importance", y="Feature", orientation="h",
+                color="Importance", color_continuous_scale="Greens",
+                template="plotly_dark")
 fig_fi.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                       height=450, coloraxis_showscale=False, showlegend=False,
                       margin=dict(l=10,r=10,t=10,b=10))
-fig_fi.update_traces(text=df_fi["Importancia"].apply(lambda x: f"{x:.3f}"),
+fig_fi.update_traces(text=df_fi["Importance"].apply(lambda x: f"{x:.3f}"),
                       textposition="outside", textfont=dict(color="white", size=10))
 st.plotly_chart(fig_fi, use_container_width=True)
 
+st.markdown("""
+<div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.15);border-left:3px solid #00ff88;border-radius:8px;padding:14px 18px;margin:8px 0">
+    <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">Key Finding</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:0.9rem">
+    <b style="color:#00ff88">Hard Court Win% (0.756)</b> is by far the most important feature, confirming that past performance on hard courts is the strongest predictor for the US Open. 
+    Aces (0.326) rank surprisingly second, highlighting the importance of serve dominance at Flushing Meadows.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("---")
 
-# Metodologia
-st.markdown('<p class="section-header">📋 METODOLOGÍA</p>', unsafe_allow_html=True)
+# Methodology
+st.markdown('<div class="section-label">How it works</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">METHODOLOGY</div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
-    **Fuentes de datos:**
-    - Tabla maestra: 185 jugadores, 53 métricas (ATP Tour, 2025-2026)
-    - Historial de partidos: 4,581 partidos en Hard Court (2020-2026)
-    - Dataset Jeff Sackmann (via Kaggle)
-    - Dataset ATP Daily Update (via Kaggle)
+    **Data Sources:**
+    - Master table: 185 players, 53 metrics (ATP Tour, 2025-2026)
+    - Match history: 4,581 Hard Court matches (2020-2026)
+    - Jeff Sackmann dataset (via Kaggle)
+    - ATP Daily Update dataset (via Kaggle)
 
-    **Features del modelo (14 variables):**
-    - Diferencia de ranking ATP
-    - Diferencia de Win% en Hard Court
-    - Diferencia de Win% en Grand Slams
-    - Diferencia de Win% Overall
-    - Diferencia de Win% Masters 1000
-    - Diferencia de Win% Set Decisivo
-    - Diferencia de Win% Tiebreak
-    - Diferencia de Win% tras ganar/perder 1er set
-    - Diferencia de 1er/2do Saque Ganado %
-    - Diferencia de BP Salvados/Convertidos %
-    - Diferencia de Aces
+    **Features (14 variables):**
+    - Difference in ATP Ranking
+    - Difference in Hard Court Win%
+    - Difference in Grand Slam Win%
+    - Difference in Overall Win%
+    - Difference in Masters 1000 Win%
+    - Difference in Deciding Set Win%
+    - Difference in Tiebreak Win%
+    - Difference in Win% after winning/losing 1st set
+    - Difference in 1st/2nd Serve Won%
+    - Difference in BP Saved/Converted%
+    - Difference in Aces
     """)
 
 with col2:
     st.markdown("""
-    **Proceso de entrenamiento:**
-    - Dataset: 8,082 ejemplos (partido + partido invertido)
-    - Split: 80% entrenamiento / 20% test
-    - Balance: 50% ganadores / 50% perdedores
-    
-    **Modelos comparados:**
-    - Random Forest (100 árboles)
-    - Logistic Regression ← **MEJOR**
-    - Decision Tree (profundidad máx. 5)
+    **Training process:**
+    - Dataset: 8,082 examples (match + inverted match)
+    - Split: 80% training / 20% test
+    - Balance: 50% winners / 50% losers
 
-    **Resultados del mejor modelo:**
+    **Models compared:**
+    - Random Forest (100 trees)
+    - Logistic Regression ← **BEST**
+    - Decision Tree (max depth 5)
+
+    **Best model results:**
     - Accuracy: **65.2%**
     - ROC AUC: **0.716**
     - Precision: 0.65
     - Recall: 0.65
-    
-    **Limitaciones:**
-    - Predecir tenis es inherentemente difícil (65-70% es excelente)
-    - No incluye condiciones del día (viento, temperatura)
-    - No incluye historial head-to-head directo
-    - Las lesiones reducen la fiabilidad de la predicción
+
+    **Limitations:**
+    - 65-70% accuracy is excellent for tennis prediction
+    - Model does not include weather or court conditions
+    - No direct head-to-head history between players
+    - Injuries can significantly change probabilities
     """)
 
 st.markdown("---")
-st.markdown('<p style="text-align:center;color:#333;font-size:0.8rem">US Open 2026 Analytics Platform · Capstone Project</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center;color:rgba(255,255,255,0.15);font-size:0.8rem">US Open 2026 Analytics Platform · Capstone Project</p>', unsafe_allow_html=True)
