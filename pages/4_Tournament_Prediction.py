@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.graph_objects as go
 
 st.set_page_config(page_title="Tournament Prediction", page_icon="🏆", layout="wide")
 
@@ -57,7 +56,15 @@ fotos = {
     "Karen Khachanov":              "https://www.atptour.com/-/media/alias/player-headshot/KE29",
     "Arthur Fils":                  "https://www.atptour.com/-/media/alias/player-headshot/F0F1",
     "Ugo Humbert":                  "https://www.atptour.com/-/media/alias/player-headshot/HH26",
-    "Daniil Medvedev":              "https://www.atptour.com/-/media/alias/player-headshot/MM58",
+    # --- Añadidos: jugadores que no tenían foto ---
+    "Rafael Jodar":                 "https://www.atptour.com/-/media/alias/player-headshot/J0DZ",
+    "Joao Fonseca":                 "https://www.atptour.com/-/media/alias/player-headshot/F0FV",
+    "Francisco Cerundolo":          "https://www.atptour.com/-/media/alias/player-headshot/C0AU",
+    "Cameron Norrie":               "https://www.atptour.com/-/media/alias/player-headshot/N771",
+    "Alejandro Davidovich Fokina":  "https://www.atptour.com/-/media/alias/player-headshot/DH50",
+    "Arthur Rinderknech":           "https://www.atptour.com/-/media/alias/player-headshot/RC91",
+    "Luciano Darderi":              "https://www.atptour.com/-/media/alias/player-headshot/D0FJ",
+    "Valentin Vacherot":            "https://www.atptour.com/-/media/alias/player-headshot/VA25",
 }
 
 # Title
@@ -126,76 +133,46 @@ st.markdown("---")
 st.markdown('<div class="section-label">All Contenders</div>', unsafe_allow_html=True)
 st.markdown('<div class="section-header">FULL RANKINGS</div>', unsafe_allow_html=True)
 
-col_left, col_right = st.columns([1.3, 1])
+for i, row in df_pred.iterrows():
+    name   = row["Jugador"]
+    prob   = row["Prob US Open"]
+    rank   = int(row["Ranking ATP"]) if pd.notna(row.get("Ranking ATP")) else "?"
+    hard   = row.get("Win% Hard", "N/A")
+    estado = row.get("Estado", "FIT")
+    foto   = fotos.get(name, "")
 
-with col_left:
-    for i, row in df_pred.iterrows():
-        name   = row["Jugador"]
-        prob   = row["Prob US Open"]
-        rank   = int(row["Ranking ATP"]) if pd.notna(row.get("Ranking ATP")) else "?"
-        hard   = row.get("Win% Hard", "N/A")
-        estado = row.get("Estado", "FIT")
-        foto   = fotos.get(name, "")
+    if estado == "LESIONADO":
+        badge = '<span style="background:rgba(255,68,68,0.2);color:#ff4444;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">INJURED</span>'
+        bar_color = "#ff4444"
+    elif estado == "DUDA":
+        badge = '<span style="background:rgba(255,170,0,0.2);color:#ffaa00;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">DOUBT</span>'
+        bar_color = "#ffaa00"
+    else:
+        badge = '<span style="background:rgba(0,255,136,0.1);color:#00ff88;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">FIT</span>'
+        bar_color = "#00ff88"
 
-        if estado == "LESIONADO":
-            badge = '<span style="background:rgba(255,68,68,0.2);color:#ff4444;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">INJURED</span>'
-            bar_color = "#ff4444"
-        elif estado == "DUDA":
-            badge = '<span style="background:rgba(255,170,0,0.2);color:#ffaa00;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">DOUBT</span>'
-            bar_color = "#ffaa00"
-        else:
-            badge = '<span style="background:rgba(0,255,136,0.1);color:#00ff88;border-radius:4px;padding:2px 6px;font-size:0.6rem;font-weight:700">FIT</span>'
-            bar_color = "#00ff88"
+    img_html = f'<img src="{foto}" style="width:40px;height:40px;object-fit:cover;object-position:top;border-radius:50%;border:2px solid {bar_color}">' if foto else f'<div style="width:40px;height:40px;background:rgba(255,255,255,0.05);border-radius:50%;border:2px solid {bar_color};display:flex;align-items:center;justify-content:center;font-size:1.2rem">🎾</div>'
 
-        img_html = f'<img src="{foto}" style="width:40px;height:40px;object-fit:cover;object-position:top;border-radius:50%;border:2px solid {bar_color}">' if foto else f'<div style="width:40px;height:40px;background:rgba(255,255,255,0.05);border-radius:50%;border:2px solid {bar_color};display:flex;align-items:center;justify-content:center;font-size:1.2rem">🎾</div>'
-
-        st.markdown(f"""
-        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);
-                    border-radius:10px;padding:12px 16px;margin:6px 0">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-                <div style="color:rgba(255,255,255,0.2);font-weight:900;font-size:1rem;width:24px">#{i+1}</div>
-                {img_html}
-                <div style="flex:1">
-                    <div style="color:#ffffff;font-weight:700;font-size:0.95rem">{name}</div>
-                    <div style="color:rgba(255,255,255,0.3);font-size:0.75rem">ATP #{rank} · Hard: {hard}</div>
-                </div>
-                {badge}
-                <div style="color:{bar_color};font-weight:900;font-size:1.1rem">{prob}%</div>
+    st.markdown(f"""
+    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);
+                border-radius:10px;padding:12px 16px;margin:6px 0">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <div style="color:rgba(255,255,255,0.2);font-weight:900;font-size:1rem;width:24px">#{i+1}</div>
+            {img_html}
+            <div style="flex:1">
+                <div style="color:#ffffff;font-weight:700;font-size:0.95rem">{name}</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.75rem">ATP #{rank} · Hard: {hard}</div>
             </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:3px;height:4px;overflow:hidden">
-                <div style="width:{prob*15}%;height:4px;background:{bar_color};border-radius:3px"></div>
-            </div>
-        </div>""", unsafe_allow_html=True)
-
-with col_right:
-    colors = []
-    for _, row in df_pred.iterrows():
-        if row.get("Estado") == "LESIONADO": colors.append("#ff4444")
-        elif row.get("Estado") == "DUDA": colors.append("#ffaa00")
-        else: colors.append("#00ff88")
-
-    fig = go.Figure(go.Bar(
-        x=df_pred["Prob US Open"],
-        y=df_pred["Jugador"],
-        orientation="h",
-        marker=dict(color=colors, opacity=0.85),
-        text=df_pred["Prob US Open"].apply(lambda x: f"{x}%"),
-        textposition="outside",
-        textfont=dict(color="rgba(255,255,255,0.5)", size=10)
-    ))
-    fig.update_layout(
-        template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        height=600, margin=dict(l=10,r=60,t=10,b=10),
-        xaxis=dict(showgrid=False, showticklabels=False, range=[0,7]),
-        yaxis=dict(autorange="reversed", tickfont=dict(size=10, color="rgba(255,255,255,0.7)")),
-        showlegend=False
-    )
-    st.plotly_chart(fig, use_container_width=True)
+            {badge}
+            <div style="color:{bar_color};font-weight:900;font-size:1.1rem">{prob}%</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:3px;height:4px;overflow:hidden">
+            <div style="width:{prob*15}%;height:4px;background:{bar_color};border-radius:3px"></div>
+        </div>
+    </div>""", unsafe_allow_html=True)
 
 st.markdown("---")
 st.markdown("""
 <p style="text-align:center;color:rgba(255,255,255,0.15);font-size:0.75rem">
 US Open 2026 Analytics Platform · Capstone Project · Estimated probabilities, not real results
 </p>""", unsafe_allow_html=True)
-
-
