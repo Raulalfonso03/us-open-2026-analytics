@@ -72,7 +72,7 @@ st.markdown("""
 <div style="text-align:center;padding:40px 0 20px 0">
     <div style="font-size:0.7rem;font-weight:700;letter-spacing:4px;color:#00ff88;text-transform:uppercase;margin-bottom:8px">US Open 2026</div>
     <div style="font-family:'Bebas Neue',sans-serif;font-size:4rem;color:#ffffff;letter-spacing:3px;line-height:1">TOURNAMENT PREDICTION</div>
-    <div style="flex:0 0 36px;color:rgba(255,255,255,0.2);font-weight:900;font-size:1rem;white-space:nowrap;overflow:visible">#{i+1}</div>
+    <div style="color:rgba(255,255,255,0.3);font-size:0.9rem;margin-top:8px;letter-spacing:2px">Win probabilities for the US Open 2026</div>
 </div>
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:0 0 24px 0">
 """, unsafe_allow_html=True)
