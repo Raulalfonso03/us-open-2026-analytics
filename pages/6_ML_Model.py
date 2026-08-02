@@ -129,70 +129,13 @@ st.markdown('<div class="section-header">METHODOLOGY</div>', unsafe_allow_html=T
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
-    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px">
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">Data Sources</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:2">
-            → Master table: 185 players, 53 metrics (ATP Tour, 2025-2026)<br>
-            → Match history: 4,581 Hard Court matches (2020-2026)<br>
-            → Jeff Sackmann dataset (via Kaggle)<br>
-            → ATP Daily Update dataset (via Kaggle)
-        </div>
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:20px 0 12px 0">Features (14 variables)</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:2">
-            → Difference in ATP Ranking<br>
-            → Difference in Hard Court Win%<br>
-            → Difference in Grand Slam Win%<br>
-            → Difference in Overall Win%<br>
-            → Difference in Masters 1000 Win%<br>
-            → Difference in Deciding Set Win%<br>
-            → Difference in Tiebreak Win%<br>
-            → Difference in Win% after winning/losing 1st set<br>
-            → Difference in 1st/2nd Serve Won%<br>
-            → Difference in BP Saved/Converted%<br>
-            → Difference in Aces
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px">
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">Training Process</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:2">
-            → Dataset: 8,082 examples (match + inverted match)<br>
-            → Split: 80% training / 20% test<br>
-            → Balance: 50% winners / 50% losers
-        </div>
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:20px 0 12px 0">Models Compared</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:2">
-            → Random Forest (100 trees)<br>
-            → <span style="color:#00ff88;font-weight:700">Logistic Regression ← BEST MODEL</span><br>
-            → Decision Tree (max depth 5)
-        </div>
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:20px 0 12px 0">Best Model Results</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:2">
-            → Accuracy: <span style="color:#00ff88;font-weight:700">65.2%</span><br>
-            → ROC AUC: <span style="color:#00ff88;font-weight:700">0.716</span><br>
-            → Precision: 0.65 · Recall: 0.65
-        </div>
-        <div style="color:#00ff88;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:20px 0 12px 0">Limitations</div>
-        <div style="color:rgba(255,255,255,0.5);font-size:0.82rem;line-height:2">
-            → 65-70% accuracy is excellent for tennis prediction<br>
-            → Model does not include weather or court conditions<br>
-            → No direct head-to-head history between players<br>
-            → Injuries can significantly change probabilities
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("---")
-st.markdown('<p style="text-align:center;color:rgba(255,255,255,0.15);font-size:0.8rem">US Open 2026 Analytics Platform · Capstone Project</p>', unsafe_allow_html=True)
+    *Data Sources:*
     - Master table: 185 players, 53 metrics (ATP Tour, 2025-2026)
     - Match history: 4,581 Hard Court matches (2020-2026)
     - Jeff Sackmann dataset (via Kaggle)
     - ATP Daily Update dataset (via Kaggle)
 
-    **Features (14 variables):**
+    *Features (14 variables):*
     - Difference in ATP Ranking
     - Difference in Hard Court Win%
     - Difference in Grand Slam Win%
@@ -208,23 +151,23 @@ st.markdown('<p style="text-align:center;color:rgba(255,255,255,0.15);font-size:
 
 with col2:
     st.markdown("""
-    **Training process:**
+    *Training process:*
     - Dataset: 8,082 examples (match + inverted match)
     - Split: 80% training / 20% test
     - Balance: 50% winners / 50% losers
 
-    **Models compared:**
+    *Models compared:*
     - Random Forest (100 trees)
-    - Logistic Regression ← **BEST**
+    - Logistic Regression ← *BEST*
     - Decision Tree (max depth 5)
 
-    **Best model results:**
-    - Accuracy: **65.2%**
-    - ROC AUC: **0.716**
+    *Best model results:*
+    - Accuracy: *65.2%*
+    - ROC AUC: *0.716*
     - Precision: 0.65
     - Recall: 0.65
 
-    **Limitations:**
+    *Limitations:*
     - 65-70% accuracy is excellent for tennis prediction
     - Model does not include weather or court conditions
     - No direct head-to-head history between players
