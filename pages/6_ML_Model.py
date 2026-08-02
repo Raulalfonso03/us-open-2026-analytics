@@ -14,6 +14,8 @@ st.markdown("""
 [data-testid="stSidebar"] { background: rgba(5,5,5,0.98) !important; border-right: 1px solid rgba(0,255,136,0.15) !important; }
 [data-testid="stSidebar"] * { color: rgba(255,255,255,0.6) !important; }
 .section-header { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #ffffff; border-bottom: 1px solid rgba(0,255,136,0.3); padding-bottom: 8px; margin: 24px 0 16px 0; letter-spacing: 2px; }
+p, li, div { color: rgba(255,255,255,0.85) !important; }
+.stMarkdown p { color: rgba(255,255,255,0.85) !important; }
 .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; color: #00ff88; text-transform: uppercase; margin-bottom: 4px; }
 [data-testid="metric-container"] { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; }
 [data-testid="stMetricValue"] { color: #00ff88 !important; font-weight: 900 !important; }
