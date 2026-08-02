@@ -216,6 +216,9 @@ text-align: center;
 .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); margin: 0 60px; }
 
 .footer { padding: 40px 60px; text-align: center; color: rgba(255,255,255,0.2); font-size: 0.8rem; letter-spacing: 1px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 40px; }
+[data-testid="stSidebarCollapsedControl"] { display: none !important; }
+.stMainBlockContainer { padding-left: 0 !important; padding-right: 0 !important; max-width: 100% !important; }
+section[data-testid="stMain"] { padding: 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
