@@ -44,16 +44,8 @@ st.markdown("""
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:0 0 24px 0">
 """, unsafe_allow_html=True)
 
-# Sidebar filters
-with st.sidebar:
-    st.markdown("## 🔧 Filters")
-    st.markdown("---")
-    top_n = st.slider("Top N players", 10, 50, 20)
-    only_fit = st.checkbox("Only FIT players", value=False)
-
+top_n = 20
 df_filtered = df.copy()
-if only_fit and "injury_status" in df.columns:
-    df_filtered = df_filtered[df_filtered["injury_status"] == "FIT"]
 
 # KPIs
 c1, c2, c3, c4 = st.columns(4)
