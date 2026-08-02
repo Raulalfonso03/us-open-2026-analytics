@@ -140,6 +140,54 @@ with col2:
 
 st.markdown("---")
 
+# Winner prediction banner
+st.markdown("---")
+
+def calcular_score(p):
+    hard = pd.to_numeric(p.get("winpct_en_hard_52w"), errors="coerce")
+    gs   = pd.to_numeric(p.get("winpct_grand_slams_52w"), errors="coerce")
+    ov   = pd.to_numeric(p.get("winpct_overall_52w"), errors="coerce")
+    rank = pd.to_numeric(p.get("atp_rank_current"), errors="coerce")
+    hard = hard if pd.notna(hard) and hard <= 1 else 0.5
+    gs   = gs   if pd.notna(gs)   and gs <= 1   else 0.5
+    ov   = ov   if pd.notna(ov)   and ov <= 1   else 0.5
+    rank = rank if pd.notna(rank) else 50
+    return hard*0.35 + gs*0.25 + ov*0.20 + (1 - rank/200)*0.20
+
+s1 = calcular_score(player1)
+s2 = calcular_score(player2)
+total = s1 + s2
+prob1 = round(s1/total*100, 1)
+prob2 = round(s2/total*100, 1)
+winner = p1 if s1 > s2 else p2
+winner_prob = prob1 if s1 > s2 else prob2
+loser_prob  = prob2 if s1 > s2 else prob1
+loser  = p2 if s1 > s2 else p1
+
+st.markdown(f"""
+<div style="background:linear-gradient(135deg,rgba(0,255,136,0.08),rgba(0,0,0,0));
+            border:1px solid rgba(0,255,136,0.4);border-radius:16px;padding:24px;
+            text-align:center;margin:16px 0">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:4px;color:#00ff88;text-transform:uppercase;margin-bottom:8px">ML Prediction</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:4px">PREDICTED WINNER</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:#00ff88;letter-spacing:2px;line-height:1">{winner}</div>
+    <div style="display:flex;justify-content:center;align-items:center;gap:32px;margin-top:16px">
+        <div style="text-align:center">
+            <div style="font-size:2rem;font-weight:900;color:#00ff88">{winner_prob}%</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase">{winner}</div>
+        </div>
+        <div style="color:rgba(255,255,255,0.2);font-size:1.5rem">vs</div>
+        <div style="text-align:center">
+            <div style="font-size:2rem;font-weight:900;color:rgba(255,255,255,0.4)">{loser_prob}%</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase">{loser}</div>
+        </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:6px;margin-top:16px;overflow:hidden">
+        <div style="width:{winner_prob}%;height:6px;background:linear-gradient(90deg,#1a472a,#00ff88);border-radius:4px"></div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 def compare_row(label, col, p1d, p2d, higher_better=True, is_pct=True):
     v1 = pd.to_numeric(p1d.get(col), errors="coerce")
     v2 = pd.to_numeric(p2d.get(col), errors="coerce")
